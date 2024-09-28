@@ -12,19 +12,19 @@ export class UsersController {
             this.userService.create(userDto)
     }
 
-    @Get()
-    async getAll (){
-      return  this.userService.getAll()
-    }
+    // @Get()
+    // async getAll (){
+    //   return  this.userService.getAll()
+    // }
 
-    @Get('/:id')
-    async getById (@Param('id')id:string){
-        return this.userService.getById(id);
-    }
+    // @Get('/:id')
+    // async getById (@Param('id')id:string){
+    //     return this.userService.getById(id);
+    // }
 
-    @Delete()
-    async remove(@Param('id')id:string){
-        return this.userService.delete(id);
-    }
+    // @Delete()
+    // async remove(@Param('id')id:string){
+    //     return this.userService.delete(id);
+    // }
         
 }
