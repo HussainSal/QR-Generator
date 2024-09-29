@@ -6,27 +6,26 @@ import { ApiTags } from '@nestjs/swagger';
 @Controller('auth')
 @ApiTags('Auth')
 export class UsersController {
+  constructor(private userService: UsersService) {}
 
-    constructor(private userService: UsersService){}
+  @Post('/')
+  async create(@Body() userDto: CreateUserDto) {
+    const user = await this.userService.create(userDto);
+    return user;
+  }
 
-    @Post('/')
-    async create (@Body()userDto:CreateUserDto){
-            this.userService.create(userDto)
-    }
+  @Get('/')
+  async getAll() {
+    return this.userService.getAll();
+  }
 
-    @Get('/')
-    async getAll (){
-      return  this.userService.getAll()
-    }
+  // @Get('/:id')
+  // async getById (@Param('id')id:string){
+  //     return this.userService.getById(id);
+  // }
 
-    // @Get('/:id')
-    // async getById (@Param('id')id:string){
-    //     return this.userService.getById(id);
-    // }
-
-    // @Delete()
-    // async remove(@Param('id')id:string){
-    //     return this.userService.delete(id);
-    // }
-        
+  // @Delete()
+  // async remove(@Param('id')id:string){
+  //     return this.userService.delete(id);
+  // }
 }

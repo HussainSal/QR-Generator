@@ -21,5 +21,22 @@ export class CreateUserDto {
 
   @IsString()
   @ApiProperty()
-  avatar:string
+  avatar: string;
+}
+
+export class GetUserDetailDto {
+  @IsNotEmpty()
+  @IsString()
+  @ApiProperty()
+  name: string;
+
+  @IsNotEmpty()
+  @IsString()
+  @IsEmail(undefined, { message: 'Please enter a valid email.' })
+  @ApiProperty()
+  email: string;
+
+  @IsString()
+  @ApiProperty()
+  avatar: string;
 }

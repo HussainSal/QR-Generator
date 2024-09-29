@@ -17,15 +17,12 @@ export const typeOrmConfig: TypeOrmModuleAsyncOptions = {
   useFactory: async (
     configureService: ConfigService,
   ): Promise<TypeOrmModuleOptions> => {
+    console.log(
+      configureService.get<string>('DATABASE_PASSWORD'),
+      'MODULEEEEE',
+      configureService.get<string>('DATABASE_NAME'),
+    );
 
-    console.log( configureService.get<string>('DATABASE_PASSWORD'),"MODULE")
-
-// DATABASE_TYPE=postgres            
-// DATABASE_NAME=chat-app       
-// DATABASE_USER=postgres            
-// DATABASE_HOST=localhost
-// DATABASE_PORT=5433
-// DATABASE_PASSWORD=8520       
     return {
       type: 'postgres',
       host: configureService.get<string>('DATABASE_HOST'),
