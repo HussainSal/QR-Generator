@@ -7,6 +7,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { typeOrmConfig } from './db/typeorm.config';
 import { ConfigModule } from '@nestjs/config';
 
+
+  
 @Module({
   imports: [AuthModule, UsersModule, 
     ConfigModule.forRoot({isGlobal:true}),

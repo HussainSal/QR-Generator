@@ -18,7 +18,6 @@ export class UsersService {
     const hashedPassword = await bcrypt.hash(password,9);
     const user = this.usersRepository.create({...payload, password:hashedPassword})
     await user.save()
-
     return user
   }
 

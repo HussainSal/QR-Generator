@@ -1,21 +1,23 @@
 import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/user.dto';
+import { ApiTags } from '@nestjs/swagger';
 
-@Controller('users')
+@Controller('auth')
+@ApiTags('Auth')
 export class UsersController {
 
     constructor(private userService: UsersService){}
 
-    @Post()
+    @Post('/')
     async create (@Body()userDto:CreateUserDto){
             this.userService.create(userDto)
     }
 
-    // @Get()
-    // async getAll (){
-    //   return  this.userService.getAll()
-    // }
+    @Get('/')
+    async getAll (){
+      return  this.userService.getAll()
+    }
 
     // @Get('/:id')
     // async getById (@Param('id')id:string){
