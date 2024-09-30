@@ -17,11 +17,17 @@ export const typeOrmConfig: TypeOrmModuleAsyncOptions = {
   useFactory: async (
     configureService: ConfigService,
   ): Promise<TypeOrmModuleOptions> => {
+    console.log(
+      configureService.get<string>('DATABASE_PASSWORD'),
+      'MODULEEEEE',
+      configureService.get<string>('DATABASE_NAME'),
+    );
+
     return {
       type: 'postgres',
       host: configureService.get<string>('DATABASE_HOST'),
       port: configureService.get<number>('DATABASE_PORT'),
-      username: configureService.get<string>('postgres'),
+      username: configureService.get<string>('DATABASE_USER'),
       password: configureService.get<string>('DATABASE_PASSWORD'),
       database: configureService.get<string>('DATABASE_NAME'),
       autoLoadEntities: true,
