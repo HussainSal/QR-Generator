@@ -4,6 +4,7 @@ import { User } from './entity/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateUserDto, GetUserDetailDto } from './dto/user.dto';
 import * as bcrypt from 'bcrypt'; // Correct import
+import { Plan, Subscription } from './entity/subscription.entity';
 
 @Injectable()
 export class UsersService {
@@ -20,13 +21,29 @@ export class UsersService {
       where: { email: payload.email },
     });
 
-    // console.log(userExist, 'userExist');
+    console.log(userExist, 'userExist');
     if (userExist?.length) {
-      throw new BadRequestException();
+      throw new BadRequestException('User already exist');
     }
 
     const hashedPassword = await bcrypt.hash(password, 9);
     console.log(hashedPassword, 'HASHED');
+
+    const activationDate = new Date().toISOString();
+
+    // Set expiresOn 15 days after the current date
+    const expiresOn = new Date();
+    expiresOn.setDate(expiresOn.getDate() + 15); // Adds 15 days to the current date
+    const expiresOnISOString = expiresOn.toISOString(); // Converts to ISO string format
+
+    const plan = Plan.FREE;
+    // // Create the subscription entity
+    // const subscription = await this.subscriptionRepository.create({
+    //   plan,
+    //   activationDate,
+    //   expiresOn: expiresOnISOString,
+    // });
+
     const user = this.usersRepository.create({
       ...payload,
       password: hashedPassword,

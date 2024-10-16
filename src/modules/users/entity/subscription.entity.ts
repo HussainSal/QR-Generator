@@ -7,7 +7,7 @@ import {
 } from 'typeorm';
 import { User } from './user.entity';
 
-enum Plan {
+export enum Plan {
   FREE = 'free',
   BASIC = 'basic',
   PRO = 'pro',
