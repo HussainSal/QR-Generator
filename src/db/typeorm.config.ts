@@ -3,6 +3,12 @@ import {
   TypeOrmModuleAsyncOptions,
   TypeOrmModuleOptions,
 } from '@nestjs/typeorm';
+import { Pdf } from 'src/modules/qrcodetype/entity/pdf.entity';
+import { QrCode } from 'src/modules/qrcodetype/entity/qrcode.entity';
+import { VCard } from 'src/modules/qrcodetype/entity/vcard.entitiy';
+import { Website } from 'src/modules/qrcodetype/entity/website.entity';
+import { Subscription } from 'src/modules/users/entity/subscription.entity';
+import { User } from 'src/modules/users/entity/user.entity';
 
 // DATABASE_TYPE=postgres
 // DATABASE_NAME=chat-app
@@ -30,6 +36,7 @@ export const typeOrmConfig: TypeOrmModuleAsyncOptions = {
       username: configureService.get<string>('DATABASE_USER'),
       password: configureService.get<string>('DATABASE_PASSWORD'),
       database: configureService.get<string>('DATABASE_NAME'),
+      entities: [User, Subscription, QrCode, Pdf, VCard, Website],
       autoLoadEntities: true,
       synchronize: true,
     };

@@ -3,7 +3,7 @@ import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/user.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { GetUser } from '../auth/get-user-decoratore';
-import { User } from './entities/user.entity';
+import { User } from './entity/user.entity';
 
 // @ApiTags('Auth')
 @Controller('users')

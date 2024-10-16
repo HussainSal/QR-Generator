@@ -1,6 +1,6 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
-import { User } from './entities/user.entity';
+import { User } from './entity/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateUserDto, GetUserDetailDto } from './dto/user.dto';
 import * as bcrypt from 'bcrypt'; // Correct import
@@ -20,7 +20,7 @@ export class UsersService {
       where: { email: payload.email },
     });
 
-    console.log(userExist, 'userExist');
+    // console.log(userExist, 'userExist');
     if (userExist?.length) {
       throw new BadRequestException();
     }
