@@ -1,4 +1,8 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { UsersService } from '../users/users.service';
 import { RegisterUserDto } from './dto/registerUserDto';
@@ -6,7 +10,7 @@ import { LoginCredentialDto } from './dto/login-user-dto';
 import * as bcrypt from 'bcrypt';
 import { ExceptionsHandler } from '@nestjs/core/exceptions/exceptions-handler';
 import { JwtService } from '@nestjs/jwt';
-import { Payload } from './dto/payload';
+import { jwtConstants, Payload } from './dto/payload';
 
 @Injectable()
 export class AuthService {
@@ -31,6 +35,9 @@ export class AuthService {
     const { email, password } = loginCredentialDto;
 
     const user = await this.userService.getByEmail(email);
+    if (!user) {
+      throw new BadRequestException('User does not exist.');
+    }
     try {
       const isPasswordMatch = await bcrypt.compare(password, user.password);
 
@@ -40,7 +47,14 @@ export class AuthService {
 
       const payload: Payload = { id: user.id, email: user.email };
 
-      return { accessToken: this.jwtService.sign(payload) };
+      const token = this.jwtService.sign(payload, { secret: jwtConstants.secret });
+
+      console.log(token,"Token")
+
+      const decoded = this.jwtService.verify(token, { secret: jwtConstants.secret });
+      console.log('Decoded Token:', decoded);
+
+      return { accessToken: token };
     } catch (err) {
       console.log(err, 'ERROR');
       throw new UnauthorizedException(err);

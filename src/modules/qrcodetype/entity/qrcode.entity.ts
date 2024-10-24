@@ -8,7 +8,7 @@ import {
 } from 'typeorm';
 import { Website } from './website.entity';
 import { Pdf } from './pdf.entity';
-import { VCard } from './vcard.entitiy';
+import { VCard } from 'src/modules/vcard/entity/vcard.entitiy';
 
 @Entity()
 export class QrCode extends BaseEntity {

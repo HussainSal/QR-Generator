@@ -6,4 +6,6 @@ import { QrcodetypeService } from './qrcodetype.service';
   controllers: [QrcodetypeController],
   providers: [QrcodetypeService]
 })
-export class QrcodetypeModule {}
+export class QrcodetypeModule {
+  
+}

@@ -1,3 +1,4 @@
+import { QrCode } from 'src/modules/qrcodetype/entity/qrcode.entity';
 import { User } from 'src/modules/users/entity/user.entity';
 import {
   BaseEntity,
@@ -7,7 +8,6 @@ import {
   ManyToOne,
   OneToOne,
 } from 'typeorm';
-import { QrCode } from './qrcode.entity';
 
 @Entity()
 export class VCard extends BaseEntity {
@@ -29,8 +29,8 @@ export class VCard extends BaseEntity {
   @Column()
   lastName: string;
 
-  @Column('int')
-  contact: number;
+  @Column()
+  contact: string;
 
   @Column('int', { nullable: true })
   fax: number;

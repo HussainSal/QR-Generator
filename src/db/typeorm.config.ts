@@ -5,10 +5,10 @@ import {
 } from '@nestjs/typeorm';
 import { Pdf } from 'src/modules/qrcodetype/entity/pdf.entity';
 import { QrCode } from 'src/modules/qrcodetype/entity/qrcode.entity';
-import { VCard } from 'src/modules/qrcodetype/entity/vcard.entitiy';
 import { Website } from 'src/modules/qrcodetype/entity/website.entity';
 import { Subscription } from 'src/modules/users/entity/subscription.entity';
 import { User } from 'src/modules/users/entity/user.entity';
+import { VCard } from 'src/modules/vcard/entity/vcard.entitiy';
 
 // DATABASE_TYPE=postgres
 // DATABASE_NAME=chat-app
@@ -23,11 +23,11 @@ export const typeOrmConfig: TypeOrmModuleAsyncOptions = {
   useFactory: async (
     configureService: ConfigService,
   ): Promise<TypeOrmModuleOptions> => {
-    console.log(
-      configureService.get<string>('DATABASE_PASSWORD'),
-      'MODULEEEEE',
-      configureService.get<string>('DATABASE_NAME'),
-    );
+    // console.log(
+    //   configureService.get<string>('DATABASE_PASSWORD'),
+    //   'MODULEEEEE',
+    //   configureService.get<string>('DATABASE_NAME'),
+    // );
 
     return {
       type: 'postgres',

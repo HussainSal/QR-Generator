@@ -10,9 +10,9 @@ import {
 } from 'typeorm';
 import { IsEmail, IsOptional } from 'class-validator';
 import { Subscription } from './subscription.entity';
-import { VCard } from 'src/modules/qrcodetype/entity/vcard.entitiy';
 import { Website } from 'src/modules/qrcodetype/entity/website.entity';
 import { Pdf } from 'src/modules/qrcodetype/entity/pdf.entity';
+import { VCard } from 'src/modules/vcard/entity/vcard.entitiy';
 
 @Entity()
 export class User extends BaseEntity {
@@ -29,7 +29,7 @@ export class User extends BaseEntity {
   @Column()
   password: string;
 
-  @Column()
+  @Column({default:null})
   avatar: string;
 
   @Column({ default: null })

@@ -14,8 +14,8 @@ export class UsersService {
   ) {}
 
   async create(payload: CreateUserDto): Promise<User> {
+    console.log(payload, 'PASSWORD');
     const { password } = payload;
-    console.log(password, 'PASSWORD');
 
     const userExist = await this.usersRepository.find({
       where: { email: payload.email },
@@ -35,8 +35,8 @@ export class UsersService {
     const expiresOn = new Date();
     expiresOn.setDate(expiresOn.getDate() + 15); // Adds 15 days to the current date
     const expiresOnISOString = expiresOn.toISOString(); // Converts to ISO string format
-
     const plan = Plan.FREE;
+
     // // Create the subscription entity
     // const subscription = await this.subscriptionRepository.create({
     //   plan,
@@ -67,5 +67,11 @@ export class UsersService {
 
   async delete(id: string) {
     const user = await this.usersRepository.delete(id);
+  }
+
+  async getById(id:string){
+    const user = await this.usersRepository.findOne({where:{id}});
+
+    return user
   }
 }
