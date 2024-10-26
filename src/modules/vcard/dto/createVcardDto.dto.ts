@@ -78,3 +78,9 @@ export class CreateVcardDto extends BaseVcardDto {
     @IsOptional()
     styling:string 
 }
+
+export class UpdateVcardDto extends CreateVcardDto {
+    @IsString()
+    @IsNotEmpty()
+    id:string
+}

@@ -31,20 +31,23 @@ export class VcardController {
     return vcard;
   }
 
+  @UseGuards(AuthGuard())
   @Get()
   async findAll(@GetUser() user: User): Promise<VCard[]> {
     const vcard = await this.vcardService.findAll(user.id);
     return vcard;
   }
 
+  @UseGuards(AuthGuard())
   @Get('/:id')
   async find(@Param('id') id: string, @GetUser() user: User): Promise<VCard[]> {
     const vcard = await this.vcardService.findOne(user.id, id);
     return vcard;
   }
 
+  @UseGuards(AuthGuard())
   @Delete('/:id')
-  async delete(@Param('id') id: string) {
-    await this.vcardService.delete(id);
+  async delete(@GetUser() user:User, @Param('id') id: string) {
+    await this.vcardService.delete(id,user.id);
   }
 }
