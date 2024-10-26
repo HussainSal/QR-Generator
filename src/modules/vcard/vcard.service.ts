@@ -39,6 +39,7 @@ export class VcardService {
       return updatedVCard;
   }
 
+
   async findAll(userId: string) {
     const vcards = await this.vcardRepository.find({
       where: { user: { id: userId } },
