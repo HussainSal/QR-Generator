@@ -8,11 +8,14 @@ async function bootstrap() {
 
   // Swagger setup
   const config = new DocumentBuilder()
-    .setTitle('Chat_App')
-    .setDescription('Apis for Chat_App.')
-    .setVersion('1.0')
-    .addBearerAuth()
-    .build();
+  .setTitle('API Documentation')
+  .setDescription('API description')
+  .setVersion('1.0')
+  .addBearerAuth(
+    { type: 'http', scheme: 'bearer', bearerFormat: 'JWT' },
+    'access-token',
+  )
+  .build();
 
   // integrated swagger
   const document = SwaggerModule.createDocument(app, config);

@@ -20,15 +20,13 @@ import { VCard } from './entity/vcard.entitiy';
 export class VcardController {
   constructor(private vcardService: VcardService) {}
 
-  // @UseGuards(AuthGuard())
+  @UseGuards(AuthGuard())
   @Post()
   async createVcard(
     @GetUser() user: User,
     @Body() createVcardDto: CreateVcardDto,
   ): Promise<VCard> {
-
     console.log(user,"USER_INFO")
-
     const vcard = await this.vcardService.create(createVcardDto,user.id);
     return vcard;
   }
