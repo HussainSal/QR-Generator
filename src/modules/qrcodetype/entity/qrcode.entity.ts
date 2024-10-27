@@ -9,6 +9,15 @@ import {
 import { Website } from './website.entity';
 import { Pdf } from './pdf.entity';
 import { VCard } from 'src/modules/vcard/entity/vcard.entitiy';
+import { IsOptional } from 'class-validator';
+
+
+export enum QrType {
+  VCARD = "VCARD",
+  WEBSITE = "WEBSITE",
+  PDF = "PDF",
+}
+
 
 @Entity()
 export class QrCode extends BaseEntity {
@@ -24,16 +33,18 @@ export class QrCode extends BaseEntity {
   @Column()
   link: string;
 
-  @Column('int')
+
+  @Column('int',{default:0})
   scans: number;
 
-  @Column('int')
+  @Column('int',{default:0})
+  @IsOptional()
   activeDuration: number;
 
   @Column({ nullable: true })
   frame: string;
 
-  @Column({ nullable: true })
+  @Column()
   qrCode: string;
 
   @Column({ nullable: true })
@@ -42,12 +53,15 @@ export class QrCode extends BaseEntity {
   @Column({ nullable: true })
   color: string;
 
+  @IsOptional()
   @OneToOne(() => VCard, (vCard) => vCard.qrCode)
-  vCards: VCard[];
+  vCards: VCard;
 
+  @IsOptional()
   @OneToOne(() => Website, (website) => website.qrCode)
-  websites: Website[];
+  websites: Website;
 
+  @IsOptional()
   @OneToOne(() => Pdf, (pdf) => pdf.qrCode)
-  pdfs: Pdf[];
+  pdfs: Pdf;
 }

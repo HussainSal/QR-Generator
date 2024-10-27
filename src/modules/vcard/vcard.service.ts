@@ -4,13 +4,21 @@ import { VCard } from './entity/vcard.entitiy';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateVcardDto, UpdateVcardDto } from './dto/createVcardDto.dto';
 import { User } from '../users/entity/user.entity';
+import { QrcodetypeService } from '../qrcodetype/qrcodetype.service';
+import { CreateQrDto } from '../qrcodetype/dto/CreateQr.dto';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class VcardService {
+  private configService: InstanceType<typeof ConfigService>;
+
   constructor(
     @InjectRepository(VCard)
     private vcardRepository: Repository<VCard>,
-  ) {}
+    private qrService: QrcodetypeService, // Inject QrcodetypeService here
+  ) {
+    this.configService = new ConfigService();
+  }
 
   async create(payload: CreateVcardDto, user: string): Promise<VCard> {
     // const user = this.findOne()
@@ -20,7 +28,14 @@ export class VcardService {
     });
     console.log(vcard, 'VCARD_HERE');
     const res = await vcard.save();
+    
+    const qrPayload :CreateQrDto = {
+      name:vcard.firstName,
+      link:`${this.configService.get('NEXT_URL')}/${user}/${vcard.id}`
+    }
 
+    const qrCode = await this.qrService.createQr(qrPayload)
+    
     return res;
   }
 

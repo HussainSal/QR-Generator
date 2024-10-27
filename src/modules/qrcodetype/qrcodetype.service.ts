@@ -1,23 +1,29 @@
 import { Injectable } from '@nestjs/common';
 import * as QrCode from 'qrcode';  // Use the correct library import
+import { Repository } from 'typeorm';
+import { QrCode as QrCodeEntity } from './entity/qrcode.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { CreateQrDto } from './dto/CreateQr.dto';
 
 @Injectable()
 export class QrcodetypeService {
-  constructor() {}
+  constructor(
+    @InjectRepository(QrCodeEntity)
+    private qrCodeRepository : Repository<QrCodeEntity>
+  ) {}
 
-  async createQr() {
+  async createQr(payload:CreateQrDto) {
     // Creating the data
-    let data = {
-      name: 'Employee Name',
-      age: 27,
-      department: 'Police',
-      id: 'aisuoiqu3234738jdhf100223',
-    };
-
-    console.log(data, 'DATAAAA');
-    // Converting the data into String format
-    let stringdata = JSON.stringify(data);
-    
+ 
+    let data  = {
+        name: payload.name,
+        createdAt: new Date().toISOString(),
+        link:payload.link,
+        scans:0,
+        activeDuration:0,
+      }
+    let stringdata = JSON.stringify(data?.link);
+    let generatedQr  = ''      
     // Print the QR code to terminal
     QrCode.toString(stringdata, { type: 'terminal' }, function (err, QRcode) {
       if (err) {
@@ -35,9 +41,16 @@ export class QrcodetypeService {
         console.log('error occurred');
         return;
       }
+      generatedQr = code      
 
       // Printing the code
       console.log(code, 'code');
     });
+
+    const qrCompleted = {...data,qrCode:generatedQr, type:""}
+    console.log(qrCompleted,"qrCompleted")
+    const qr = this.qrCodeRepository.create(qrCompleted)
+    await qr.save();
+
   }
 }
