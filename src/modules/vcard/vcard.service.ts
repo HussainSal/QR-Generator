@@ -76,7 +76,7 @@ export class VcardService {
             return vcard;
         }
       } catch (err) {
-        
+        console.log(err)
         throw new UnauthorizedException('No such vcard found');
       }
 
