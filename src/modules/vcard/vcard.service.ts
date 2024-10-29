@@ -76,6 +76,7 @@ export class VcardService {
             return vcard;
         }
       } catch (err) {
+        
         throw new UnauthorizedException('No such vcard found');
       }
 
