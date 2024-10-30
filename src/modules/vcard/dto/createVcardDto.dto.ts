@@ -1,7 +1,7 @@
 import { IsEmail, IsNotEmpty, IsNumber, IsOptional, IsString } from "class-validator";
 import { BaseVcardDto } from "./baseVcardDto";
 
-export class CreateVcardDto extends BaseVcardDto {
+export class CreateVcardDto  {
     @IsString()
     @IsNotEmpty()
     firstName:string  

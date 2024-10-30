@@ -31,11 +31,14 @@ export class VcardService {
     
     const qrPayload :CreateQrDto = {
       name:vcard.firstName,
-      link:`${this.configService.get('NEXT_URL')}/${user}/${vcard.id}`
+      link:`${this.configService.get('NEXT_URL')}/${user}/${vcard.id}`,
+      userId:user
     }
 
     const qrCode = await this.qrService.createQr(qrPayload)
-    
+
+
+
     return res;
   }
 

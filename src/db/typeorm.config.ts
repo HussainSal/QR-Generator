@@ -3,7 +3,7 @@ import {
   TypeOrmModuleAsyncOptions,
   TypeOrmModuleOptions,
 } from '@nestjs/typeorm';
-import { Pdf } from 'src/modules/qrcodetype/entity/pdf.entity';
+import { PdfEntity } from 'src/modules/pdf/entity/Pdf.entity';
 import { QrCode } from 'src/modules/qrcodetype/entity/qrcode.entity';
 import { Website } from 'src/modules/qrcodetype/entity/website.entity';
 import { Subscription } from 'src/modules/users/entity/subscription.entity';
@@ -36,7 +36,7 @@ export const typeOrmConfig: TypeOrmModuleAsyncOptions = {
       username: configureService.get<string>('DATABASE_USER'),
       password: configureService.get<string>('DATABASE_PASSWORD'),
       database: configureService.get<string>('DATABASE_NAME'),
-      entities: [User, Subscription, QrCode, Pdf, VCard, Website],
+      entities: [User, Subscription, QrCode, PdfEntity, VCard, Website],
       autoLoadEntities: true,
       synchronize: true,
     };

@@ -13,6 +13,10 @@ export class CreateQrDto {
     @ApiProperty()
     link: string;
 
+    @IsNotEmpty()
+    @IsString()
+    userId:string
+
     // @IsNumber()
     // @ApiProperty()
     // scans: number ;
