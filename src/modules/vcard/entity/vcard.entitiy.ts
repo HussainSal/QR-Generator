@@ -22,8 +22,8 @@ export class VCard extends BaseEntity {
   @ManyToOne(() => User, (user) => user.vcard)
   user: User;
 
-  @OneToOne(() => QrCode, (qrCode) => qrCode.vCards, { cascade: true })
-  qrCode: QrCode;
+  // @OneToOne(() => QrCode, (qrCode) => qrCode.id, { cascade: true })
+  // qrCode: QrCode;
 
   @Column({ nullable: true })
   image: string;

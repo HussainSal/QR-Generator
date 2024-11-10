@@ -27,13 +27,14 @@ export class VcardService {
       user: { id: user },
       createAt: new Date().toISOString(),
     });
-    console.log(vcard, 'VCARD_HERE');
     const res = await vcard.save();
+    console.log(res, 'VCARD_HERE');
 
     const qrPayload: CreateQrDto = {
       name: vcard.firstName,
       link: `${this.configService.get('NEXT_URL')}/${user}/${vcard.id}`,
       userId: user,
+      serviceId: vcard.id,
     };
 
     const qrCode = await this.qrService.createQr(qrPayload);

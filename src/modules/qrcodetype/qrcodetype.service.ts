@@ -22,7 +22,11 @@ export class QrcodetypeService {
       scans: 0,
       activeDuration: 0,
       user: { id: payload.userId },
+      vCard: { id: payload.serviceId },
     };
+
+    console.log(data, 'datadata');
+
     let stringdata = JSON.stringify(data?.link);
     let generatedQr = '';
     // Print the QR code to terminal
@@ -31,7 +35,6 @@ export class QrcodetypeService {
         console.log('error occurred');
         return;
       }
-
       // Printing the generated code
       console.log(QRcode, 'QRcode');
     });
@@ -44,14 +47,13 @@ export class QrcodetypeService {
       }
       generatedQr = code;
       // Printing the code
-      console.log(code, 'code');
+      console.log(code, 'coddddeeeee');
     });
-    const qrCompleted = { ...data, qrCode: generatedQr, type: '' };
+    const qrCompleted = { ...data, qrCode: generatedQr };
     console.log(qrCompleted, 'qrCompleted');
     const qr = this.qrCodeRepository.create(qrCompleted);
-    await qr.save();
+    const res = await this.qrCodeRepository.save(qr);
+
+    return res;
   }
-  // async findAll (userId:string){
-  //   const qr = this.qrCodeRepository.find({where:{}})
-  // }
 }

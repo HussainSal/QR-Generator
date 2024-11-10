@@ -10,35 +10,31 @@ import { QrcodetypeService } from '../qrcodetype/qrcodetype.service';
 
 @Injectable()
 export class PdfService {
-    private configService: InstanceType<typeof ConfigService>;
+  private configService: InstanceType<typeof ConfigService>;
 
-    constructor(
-        @InjectRepository(PdfEntity)
-        private pdfRepository:Repository<PdfEntity>,
-        private qrService:QrcodetypeService
-    ){
-        this.configService = new ConfigService();
-    }
+  constructor(
+    @InjectRepository(PdfEntity)
+    private pdfRepository: Repository<PdfEntity>,
+    private qrService: QrcodetypeService,
+  ) {
+    this.configService = new ConfigService();
+  }
 
-    async createPdf (payload:CreatePdfDto, user:string):Promise<any> {
+  async createPdf(payload: CreatePdfDto, user: string): Promise<any> {
+    console.log(payload, 'payload');
 
-        console.log(payload,"payload")
+    const pdf = this.pdfRepository.create({ ...payload, user: { id: user } });
+    const res = await pdf.save();
 
-        const pdf =  this.pdfRepository.create({...payload,user:{id:user}});
-        const res = await  pdf.save()
+    const qrPayload: CreateQrDto = {
+      name: 'pdf',
+      link: `${this.configService.get('NEXT_URL')}/${user}/${pdf.id}`,
+      userId: user,
+      serviceId: pdf.id,
+    };
 
-        const qrPayload :CreateQrDto = {
-            name:'pdf',
-            link:`${this.configService.get('NEXT_URL')}/${user}/${pdf.id}`,
-            userId:user
-          }
-      
-          const qrCode = await this.qrService.createQr(qrPayload)
-      
-      
-      
-          return res;
+    const qrCode = await this.qrService.createQr(qrPayload);
 
-    }
-
+    return res;
+  }
 }

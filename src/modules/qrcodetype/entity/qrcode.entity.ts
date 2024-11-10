@@ -13,13 +13,11 @@ import { IsOptional } from 'class-validator';
 import { User } from 'src/modules/users/entity/user.entity';
 import { PdfEntity } from 'src/modules/pdf/entity/Pdf.entity';
 
-
 export enum QrType {
-  VCARD = "VCARD",
-  WEBSITE = "WEBSITE",
-  PDF = "PDF",
+  VCARD = 'VCARD',
+  WEBSITE = 'WEBSITE',
+  PDF = 'PDF',
 }
-
 
 @Entity()
 export class QrCode extends BaseEntity {
@@ -38,10 +36,10 @@ export class QrCode extends BaseEntity {
   // @OneToMany(() => User, (User)=> User.id)
   // user: User
 
-  @Column('int',{default:0})
+  @Column('int', { default: 0 })
   scans: number;
 
-  @Column('int',{default:0})
+  @Column('int', { default: 0 })
   @IsOptional()
   activeDuration: number;
 
@@ -58,17 +56,17 @@ export class QrCode extends BaseEntity {
   color: string;
 
   @IsOptional()
-  @OneToOne(() => VCard, (vCard) => vCard.qrCode)
-  vCards: VCard;
+  @OneToOne(() => VCard, (vCard) => vCard.id)
+  vCard: VCard;
 
   @OneToOne(() => User, (User) => User.id)
   user: User;
 
   @IsOptional()
-  @OneToOne(() => Website, (website) => website.qrCode)
-  websites: Website;
+  @OneToOne(() => Website, (website) => website.id)
+  website: Website;
 
   @IsOptional()
-  @OneToOne(() => PdfEntity, (pdf) => pdf.qrCode)
+  @OneToOne(() => PdfEntity, (pdf) => pdf.id)
   pdf: PdfEntity;
 }
