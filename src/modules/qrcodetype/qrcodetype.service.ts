@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import * as QrCode from 'qrcode';  // Use the correct library import
+import * as QrCode from 'qrcode'; // Use the correct library import
 import { Repository } from 'typeorm';
 import { QrCode as QrCodeEntity } from './entity/qrcode.entity';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -10,22 +10,21 @@ import { User } from '../users/entity/user.entity';
 export class QrcodetypeService {
   constructor(
     @InjectRepository(QrCodeEntity)
-    private qrCodeRepository : Repository<QrCodeEntity>
+    private qrCodeRepository: Repository<QrCodeEntity>,
   ) {}
 
-  async createQr(payload:CreateQrDto) {
+  async createQr(payload: CreateQrDto) {
     // Creating the data
-    let data  = {
-        name: payload.name,
-        createdAt: new Date().toISOString(),
-        link:payload.link,
-        scans:0,
-        activeDuration:0,
-        user:{ id: payload.userId}
-        
-      }
+    let data = {
+      name: payload.name,
+      createdAt: new Date().toISOString(),
+      link: payload.link,
+      scans: 0,
+      activeDuration: 0,
+      user: { id: payload.userId },
+    };
     let stringdata = JSON.stringify(data?.link);
-    let generatedQr  = ''      
+    let generatedQr = '';
     // Print the QR code to terminal
     QrCode.toString(stringdata, { type: 'terminal' }, function (err, QRcode) {
       if (err) {
@@ -43,21 +42,16 @@ export class QrcodetypeService {
         console.log('error occurred');
         return;
       }
-      generatedQr = code      
-
+      generatedQr = code;
       // Printing the code
       console.log(code, 'code');
     });
-
-    const qrCompleted = {...data,qrCode:generatedQr, type:""}
-    console.log(qrCompleted,"qrCompleted")
-    const qr = this.qrCodeRepository.create(qrCompleted)
+    const qrCompleted = { ...data, qrCode: generatedQr, type: '' };
+    console.log(qrCompleted, 'qrCompleted');
+    const qr = this.qrCodeRepository.create(qrCompleted);
     await qr.save();
-
   }
-
   // async findAll (userId:string){
-
   //   const qr = this.qrCodeRepository.find({where:{}})
   // }
 }

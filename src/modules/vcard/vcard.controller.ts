@@ -26,8 +26,9 @@ export class VcardController {
     @GetUser() user: User,
     @Body() createVcardDto: CreateVcardDto,
   ): Promise<VCard> {
-    console.log(user,"USER_INFO")
-    const vcard = await this.vcardService.create(createVcardDto,user.id);
+    console.log(user, 'USER_INFO');
+    const vcard = await this.vcardService.create(createVcardDto, user.id);
+    console.log(vcard, 'VCARDDDD');
     return vcard;
   }
 
@@ -47,7 +48,7 @@ export class VcardController {
 
   @UseGuards(AuthGuard())
   @Delete('/:id')
-  async delete(@GetUser() user:User, @Param('id') id: string) {
-    await this.vcardService.delete(id,user.id);
+  async delete(@GetUser() user: User, @Param('id') id: string) {
+    await this.vcardService.delete(id, user.id);
   }
 }

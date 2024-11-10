@@ -19,9 +19,9 @@ export class CreatePdfDto {
     @ApiProperty({ required: false })
     company?: string;
 
+   
     @ApiProperty({ required: true })
-    @IsString()
-    pdfFile:Buffer
+    pdfFile: Buffer; // Change Buffer to Express.Multer.File
     
     @IsOptional()
     @ApiProperty({ required: false })

@@ -25,19 +25,18 @@ export class VcardService {
     const vcard = this.vcardRepository.create({
       ...payload,
       user: { id: user },
+      createAt: new Date().toISOString(),
     });
     console.log(vcard, 'VCARD_HERE');
     const res = await vcard.save();
-    
-    const qrPayload :CreateQrDto = {
-      name:vcard.firstName,
-      link:`${this.configService.get('NEXT_URL')}/${user}/${vcard.id}`,
-      userId:user
-    }
 
-    const qrCode = await this.qrService.createQr(qrPayload)
+    const qrPayload: CreateQrDto = {
+      name: vcard.firstName,
+      link: `${this.configService.get('NEXT_URL')}/${user}/${vcard.id}`,
+      userId: user,
+    };
 
-
+    const qrCode = await this.qrService.createQr(qrPayload);
 
     return res;
   }
@@ -45,16 +44,16 @@ export class VcardService {
   async update(payload: UpdateVcardDto, user: string): Promise<VCard> {
     // const user = this.findOne()
 
-    const vcard = await this.vcardRepository.update(payload.id,{
+    const vcard = await this.vcardRepository.update(payload.id, {
       ...payload,
       user: { id: user },
     });
 
     const updatedVCard = await this.vcardRepository.findOne({
-        where: { id: payload.id },
-      });
-  
-      return updatedVCard;
+      where: { id: payload.id },
+    });
+
+    return updatedVCard;
   }
 
   async findAll(userId: string) {
@@ -65,25 +64,22 @@ export class VcardService {
   }
 
   async findOne(userId: string, vcardId: string) {
-
     try {
-        const vcard = await this.vcardRepository.findOne({
-          where: { id: vcardId },
+      const vcard = await this.vcardRepository.findOne({
+        where: { id: vcardId },
+      });
+
+      if (vcard.user.id === userId) {
+        const vcard = await this.vcardRepository.find({
+          where: { user: { id: userId }, id: vcardId },
         });
-  
-        if (vcard.user.id === userId) {
-            const vcard = await this.vcardRepository.find({
-                where: { user: { id: userId }, id: vcardId },
-              });
 
-            return vcard;
-        }
-      } catch (err) {
-        console.log(err)
-        throw new UnauthorizedException('No such vcard found');
+        return vcard;
       }
-
-
+    } catch (err) {
+      console.log(err);
+      throw new UnauthorizedException('No such vcard found');
+    }
   }
 
   async delete(vcardId: string, userId: string) {

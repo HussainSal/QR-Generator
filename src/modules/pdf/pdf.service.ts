@@ -22,22 +22,22 @@ export class PdfService {
 
     async createPdf (payload:CreatePdfDto, user:string):Promise<any> {
 
-        console.log(payload)
+        console.log(payload,"payload")
 
-        // const pdf =  this.pdfRepository.create({...payload,user:{id:user}});
-        // const res = await  pdf.save()
+        const pdf =  this.pdfRepository.create({...payload,user:{id:user}});
+        const res = await  pdf.save()
 
-        // const qrPayload :CreateQrDto = {
-        //     name:'pdf',
-        //     link:`${this.configService.get('NEXT_URL')}/${user}/${pdf.id}`,
-        //     userId:user
-        //   }
+        const qrPayload :CreateQrDto = {
+            name:'pdf',
+            link:`${this.configService.get('NEXT_URL')}/${user}/${pdf.id}`,
+            userId:user
+          }
       
-        //   const qrCode = await this.qrService.createQr(qrPayload)
+          const qrCode = await this.qrService.createQr(qrPayload)
       
       
       
-          return [];
+          return res;
 
     }
 

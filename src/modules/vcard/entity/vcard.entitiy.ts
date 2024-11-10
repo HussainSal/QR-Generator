@@ -1,3 +1,4 @@
+import { Optional } from '@nestjs/common';
 import { QrCode } from 'src/modules/qrcodetype/entity/qrcode.entity';
 import { User } from 'src/modules/users/entity/user.entity';
 import {
@@ -14,10 +15,14 @@ export class VCard extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
+  @Column()
+  @Optional()
+  createAt: Date;
+
   @ManyToOne(() => User, (user) => user.vcard)
   user: User;
 
-  @OneToOne(() => QrCode, (qrCode) => qrCode.vCards)
+  @OneToOne(() => QrCode, (qrCode) => qrCode.vCards, { cascade: true })
   qrCode: QrCode;
 
   @Column({ nullable: true })

@@ -12,9 +12,6 @@ export class PdfEntity extends BaseEntity {
     id:string    
     
     @ApiProperty({ type: 'string', format: 'binary' })
-    // @IsOptional()
-    @ApiProperty({ type: 'string', format: 'binary' })
-    @IsOptional()
     @Column('bytea') // Use 'bytea' to store binary data
     pdfFile: Buffer; // Store the PDF file as a Buffer
 
