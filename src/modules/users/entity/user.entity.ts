@@ -27,11 +27,10 @@ export class User extends BaseEntity {
   @IsEmail()
   email: string;
 
-
   @Column()
   password: string;
 
-  @Column({default:null})
+  @Column({ default: null })
   avatar: string;
 
   @Column({ default: null })
@@ -50,7 +49,6 @@ export class User extends BaseEntity {
   @ManyToOne(() => PdfEntity, (Pdf) => Pdf.user)
   pdf: PdfEntity;
 
-  @ManyToOne(() => QrCode, (QrCode)=> QrCode.user)
-  qrCode: QrCode
-
+  @ManyToOne(() => QrCode, (QrCode) => QrCode.user)
+  qrCode: QrCode;
 }

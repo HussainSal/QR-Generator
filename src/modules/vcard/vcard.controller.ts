@@ -14,6 +14,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { User } from '../users/entity/user.entity';
 import { GetUser } from '../auth/get-user-decoratore';
 import { VCard } from './entity/vcard.entitiy';
+import { QrCode } from '../qrcodetype/entity/qrcode.entity';
 
 @ApiTags('Vcard')
 @Controller('vcard')
@@ -25,7 +26,7 @@ export class VcardController {
   async createVcard(
     @GetUser() user: User,
     @Body() createVcardDto: CreateVcardDto,
-  ): Promise<VCard> {
+  ): Promise<{ vcard: VCard; qrCode: QrCode }> {
     console.log(user, 'USER_INFO');
     const vcard = await this.vcardService.create(createVcardDto, user.id);
     console.log(vcard, 'VCARDDDD');

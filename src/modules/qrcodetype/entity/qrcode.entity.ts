@@ -6,6 +6,7 @@ import {
   OneToMany,
   OneToOne,
   ManyToOne,
+  JoinColumn,
 } from 'typeorm';
 import { Website } from './website.entity';
 import { VCard } from 'src/modules/vcard/entity/vcard.entitiy';
@@ -43,30 +44,38 @@ export class QrCode extends BaseEntity {
   @IsOptional()
   activeDuration: number;
 
+  @IsOptional()
   @Column({ nullable: true })
   frame: string;
 
+  @IsOptional()
   @Column()
   qrCode: string;
 
+  @IsOptional()
   @Column({ nullable: true })
   logo: string;
 
+  @IsOptional()
   @Column({ nullable: true })
   color: string;
 
   @IsOptional()
-  @OneToOne(() => VCard, (vCard) => vCard.id)
+  @OneToOne(() => VCard, (vCard) => vCard.qrCode)
+  @JoinColumn() // Specify the join column
   vCard: VCard;
 
-  @OneToOne(() => User, (User) => User.id)
+  @ManyToOne(() => User, (User) => User.qrCode)
+  @JoinColumn()
   user: User;
 
   @IsOptional()
-  @OneToOne(() => Website, (website) => website.id)
+  @OneToOne(() => Website, (website) => website.qrCode)
+  // @JoinColumn() // Specify the join column
   website: Website;
 
   @IsOptional()
-  @OneToOne(() => PdfEntity, (pdf) => pdf.id)
+  @OneToOne(() => PdfEntity, (pdf) => pdf.qrCode)
+  // @JoinColumn() // Specify the join column
   pdf: PdfEntity;
 }

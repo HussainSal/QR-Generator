@@ -8,6 +8,7 @@ import {
   Column,
   ManyToOne,
   OneToOne,
+  JoinColumn,
 } from 'typeorm';
 
 @Entity()
@@ -20,10 +21,12 @@ export class VCard extends BaseEntity {
   createAt: Date;
 
   @ManyToOne(() => User, (user) => user.vcard)
+  @JoinColumn()
   user: User;
 
-  // @OneToOne(() => QrCode, (qrCode) => qrCode.id, { cascade: true })
-  // qrCode: QrCode;
+  @OneToOne(() => QrCode, (qrCode) => qrCode.vCard, { cascade: true })
+  @JoinColumn() // Specify the join column
+  qrCode: QrCode;
 
   @Column({ nullable: true })
   image: string;
