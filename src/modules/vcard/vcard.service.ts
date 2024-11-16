@@ -40,7 +40,7 @@ export class VcardService {
 
     const qrPayload: CreateQrDto = {
       name: vcard.firstName,
-      link: `${this.configService.get('NEXT_URL')}/${user}/${vcard.id}`,
+      link: `${this.configService.get('NEXT_URL')}/vcard/${vcard.id}`,
       userId: user,
       serviceId: vcard.id,
     };
@@ -75,14 +75,18 @@ export class VcardService {
 
   async findOne(userId: string, vcardId: string) {
     try {
-      const vcard = await this.vcardRepository.findOne({
+      let vcard = await this.vcardRepository.findOne({
         where: { id: vcardId },
       });
 
+      console.log(vcard, 'vcardvcard', userId);
+
       if (vcard.user.id === userId) {
-        const vcard = await this.vcardRepository.find({
+        const vcardArray = await this.vcardRepository.find({
           where: { user: { id: userId }, id: vcardId },
         });
+
+        const vcard = vcardArray[0]; // Get the first element from the array
 
         return vcard;
       }

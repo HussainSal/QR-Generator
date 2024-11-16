@@ -20,7 +20,7 @@ export class VCard extends BaseEntity {
   @Optional()
   createAt: Date;
 
-  @ManyToOne(() => User, (user) => user.vcard)
+  @ManyToOne(() => User, (user) => user.vcard, { eager: true })
   @JoinColumn()
   user: User;
 

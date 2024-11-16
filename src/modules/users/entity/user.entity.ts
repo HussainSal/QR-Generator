@@ -14,6 +14,7 @@ import { Website } from 'src/modules/qrcodetype/entity/website.entity';
 import { VCard } from 'src/modules/vcard/entity/vcard.entitiy';
 import { QrCode } from 'src/modules/qrcodetype/entity/qrcode.entity';
 import { PdfEntity } from 'src/modules/pdf/entity/Pdf.entity';
+import { Exclude } from 'class-transformer';
 
 @Entity()
 export class User extends BaseEntity {
@@ -28,6 +29,7 @@ export class User extends BaseEntity {
   email: string;
 
   @Column()
+  @Exclude()
   password: string;
 
   @Column({ default: null })

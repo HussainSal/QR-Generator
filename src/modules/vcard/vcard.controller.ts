@@ -34,16 +34,17 @@ export class VcardController {
   }
 
   @UseGuards(AuthGuard())
-  @Get()
-  async findAll(@GetUser() user: User): Promise<VCard[]> {
-    const vcard = await this.vcardService.findAll(user.id);
+  @Get('/:id')
+  async find(@Param('id') id: string, @GetUser() user: User): Promise<VCard> {
+    console.log('CHECKINGGGG');
+    const vcard = await this.vcardService.findOne(user.id, id);
     return vcard;
   }
 
   @UseGuards(AuthGuard())
-  @Get('/:id')
-  async find(@Param('id') id: string, @GetUser() user: User): Promise<VCard[]> {
-    const vcard = await this.vcardService.findOne(user.id, id);
+  @Get()
+  async findAll(@GetUser() user: User): Promise<VCard[]> {
+    const vcard = await this.vcardService.findAll(user.id);
     return vcard;
   }
 
