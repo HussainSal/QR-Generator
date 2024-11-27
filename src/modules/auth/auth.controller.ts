@@ -31,10 +31,10 @@ export class AuthController {
     return token;
   }
 
-  @Post('/test')
-  @UseGuards(AuthGuard())
-  async test(@Req() req, @GetUser() user: User) {
-    console.log(req.headers, 'REQUEST',user);
-    return user;
-  }
+  // @Post('/test')
+  // @UseGuards(AuthGuard())
+  // async test(@Req() req, @GetUser() user: User) {
+  //   console.log(req.headers, 'REQUEST',user);
+  //   return user;
+  // }
 }
