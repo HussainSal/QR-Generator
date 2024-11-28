@@ -5,30 +5,40 @@ import {
   Get,
   Param,
   Post,
+  UploadedFile,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import { VcardService } from './vcard.service';
 import { CreateVcardDto } from './dto/createVcardDto.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiConsumes, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
 import { User } from '../users/entity/user.entity';
 import { GetUser } from '../auth/get-user-decoratore';
 import { VCard } from './entity/vcard.entitiy';
 import { QrCode } from '../qrcodetype/entity/qrcode.entity';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @ApiTags('Vcard')
 @Controller('vcard')
 export class VcardController {
   constructor(private vcardService: VcardService) {}
 
-  @UseGuards(AuthGuard())
   @Post()
+  @UseGuards(AuthGuard())
+  @UseInterceptors(FileInterceptor('image'))
+  @ApiConsumes('multipart/form-data')
   async createVcard(
     @GetUser() user: User,
+    @UploadedFile() image: Express.Multer.File,
     @Body() createVcardDto: CreateVcardDto,
   ): Promise<{ vcard: VCard; qrCode: QrCode }> {
-    console.log(user, 'USER_INFO');
-    const vcard = await this.vcardService.create(createVcardDto, user.id);
+    console.log(user, 'USER_INFO_CHECK');
+
+    const vcard = await this.vcardService.create(
+      { ...createVcardDto, image: image.buffer },
+      user.id,
+    );
     console.log(vcard, 'VCARDDDD');
     return vcard;
   }

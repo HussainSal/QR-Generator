@@ -1,86 +1,97 @@
-import { IsEmail, IsNotEmpty, IsNumber, IsOptional, IsString } from "class-validator";
-import { BaseVcardDto } from "./baseVcardDto";
+import {
+  IsEmail,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsString,
+} from 'class-validator';
+import { BaseVcardDto } from './baseVcardDto';
+import { ApiProperty } from '@nestjs/swagger';
+import { Column } from 'typeorm';
 
-export class CreateVcardDto  {
-    @IsString()
-    @IsNotEmpty()
-    firstName:string  
-    
-    @IsString()
-    @IsOptional()
-    lastName:string  
+export class CreateVcardDto {
+  @ApiProperty({ required: true })
+  image: Buffer; // Change Buffer to Express.Multer.File
 
-    @IsEmail()
-    @IsNotEmpty()
-    email:string 
+  @IsString()
+  @IsNotEmpty()
+  firstName: string;
 
-    @IsString()
-    @IsNotEmpty()
-    contact:string  
+  @IsString()
+  @IsOptional()
+  lastName: string;
 
-    @IsString()
-    @IsOptional()
-    title:string 
+  @IsEmail()
+  @IsNotEmpty()
+  email: string;
 
-    @IsString()
-    @IsOptional()
-    company:string 
-  
-    @IsString()
-    @IsOptional()
-    yourJob:string 
+  @IsString()
+  @IsNotEmpty()
+  contact: string;
 
-    @IsString()
-    @IsOptional()
-    address:string 
+  @IsString()
+  @IsOptional()
+  title: string;
 
-    @IsString()
-    @IsOptional()
-    website:string 
+  @IsString()
+  @IsOptional()
+  company: string;
 
-    @IsString()
-    @IsOptional()
-    summary:string 
+  @IsString()
+  @IsOptional()
+  yourJob: string;
 
-    @IsString()
-    @IsOptional()
-    instaUrl:string 
+  @IsString()
+  @IsOptional()
+  address: string;
 
-    @IsString()
-    @IsOptional()
-    facebookUrl:string 
+  @IsString()
+  @IsOptional()
+  website: string;
 
-    @IsString()
-    @IsOptional()
-    githubUrl:string 
+  @IsString()
+  @IsOptional()
+  summary: string;
 
-    @IsString()
-    @IsOptional()
-    telegramUrl:string 
+  @IsString()
+  @IsOptional()
+  instaUrl: string;
 
-    @IsString()
-    @IsOptional()
-    twitter:string 
+  @IsString()
+  @IsOptional()
+  facebookUrl: string;
 
-    @IsString()
-    @IsOptional()
-    welcomeScreen:string 
+  @IsString()
+  @IsOptional()
+  githubUrl: string;
 
-    @IsString()
-    @IsOptional()
-    directions:string 
+  @IsString()
+  @IsOptional()
+  telegramUrl: string;
 
-    @IsString()
-    @IsOptional()
-    background:string 
+  @IsString()
+  @IsOptional()
+  twitter: string;
 
-    @IsString()
-    @IsOptional()
-    styling:string 
+  @IsString()
+  @IsOptional()
+  welcomeScreen: string;
+
+  @IsString()
+  @IsOptional()
+  directions: string;
+
+  @IsString()
+  @IsOptional()
+  background: string;
+
+  @IsString()
+  @IsOptional()
+  styling: string;
 }
 
 export class UpdateVcardDto extends CreateVcardDto {
-    @IsString()
-    @IsNotEmpty()
-    id:string
+  @IsString()
+  @IsNotEmpty()
+  id: string;
 }
