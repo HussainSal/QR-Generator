@@ -25,18 +25,15 @@ export class VcardService {
     payload: CreateVcardDto,
     user: string,
   ): Promise<{ vcard: VCard; qrCode: QrCode }> {
-    // const user = this.findOne()
+    // vcard payload
     const vardPayload = {
       ...payload,
       user: { id: user },
       createAt: new Date().toISOString(),
     };
 
-    console.log(vardPayload, 'vardPayload');
-
     const vcard = this.vcardRepository.create(vardPayload);
     const res = await vcard.save();
-    console.log(res, 'VCARD_HERE');
 
     const qrPayload: CreateQrDto = {
       name: vcard.firstName,
@@ -47,7 +44,6 @@ export class VcardService {
 
     const qrCode = await this.qrService.createQr(qrPayload);
     console.log(qrCode, 'QRCODEEEEE');
-    this.vcardRepository.update(vcard.id, { qrCode: qrCode });
     return { vcard: res, qrCode: qrCode };
   }
 

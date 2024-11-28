@@ -22,7 +22,7 @@ export class QrcodetypeService {
       scans: 0,
       activeDuration: 0,
       user: { id: payload.userId },
-      vCard: { id: payload.serviceId },
+      serviceId: { id: payload.serviceId },
     };
 
     console.log(data, 'datadata');
@@ -46,7 +46,6 @@ export class QrcodetypeService {
         return;
       }
       generatedQr = code;
-      // Printing the code
       console.log(code, 'coddddeeeee');
     });
     const qrCompleted = { ...data, qrCode: generatedQr };

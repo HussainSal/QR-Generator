@@ -1,5 +1,6 @@
 import {
   Body,
+  ClassSerializerInterceptor,
   Controller,
   Post,
   UploadedFile,
@@ -13,6 +14,7 @@ import { GetUser } from '../auth/get-user-decoratore';
 import { User } from '../users/entity/user.entity';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiConsumes, ApiTags } from '@nestjs/swagger';
+import { PdfResponseDto } from './dto/PdfResponse.dto';
 
 @ApiTags('Pdfs')
 @Controller('pdf')
@@ -21,20 +23,22 @@ export class PdfController {
   constructor(private pdfService: PdfService) {}
 
   @Post()
-  @UseInterceptors(FileInterceptor('file'))
+  @UseInterceptors(FileInterceptor('file'), ClassSerializerInterceptor)
   @ApiConsumes('multipart/form-data')
   async create(
     @GetUser() user: User,
     @UploadedFile() file: Express.Multer.File,
     @Body() payload: CreatePdfDto,
-  ) {
+  ): Promise<PdfResponseDto> {
     console.log(payload, 'payload');
     console.log(file, 'FILE_HERE');
 
     // Pass the buffer and other payload data to the service method
-    await this.pdfService.createPdf(
+    const result: PdfResponseDto = await this.pdfService.createPdf(
       { ...payload, pdfFile: file.buffer },
       user.id,
     );
+
+    return result;
   }
 }
