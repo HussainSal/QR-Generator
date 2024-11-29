@@ -109,8 +109,8 @@ export class PdfDto {
     type: 'binary',
     writeOnly: true,
   })
-  @Exclude()
-  pdfFile: Buffer; // Marked as optional since it won't be sent in responses
+  //   @Exclude()
+  pdfFile: string; // Marked as optional since it won't be sent in responses
 }
 
 export class QrCodeDto {

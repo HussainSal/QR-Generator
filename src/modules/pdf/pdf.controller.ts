@@ -35,7 +35,7 @@ export class PdfController {
 
     // Pass the buffer and other payload data to the service method
     const result: PdfResponseDto = await this.pdfService.createPdf(
-      { ...payload, pdfFile: file.buffer },
+      { ...payload, pdfFile: file },
       user.id,
     );
 

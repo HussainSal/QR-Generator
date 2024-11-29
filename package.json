@@ -31,6 +31,8 @@
     "bcrypt": "^5.1.1",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.1",
+    "contentful": "^11.2.5",
+    "contentful-management": "^11.40.0",
     "express-fileupload": "^1.5.1",
     "passport": "^0.7.0",
     "passport-jwt": "^4.0.1",

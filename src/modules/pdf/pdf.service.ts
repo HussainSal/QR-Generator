@@ -8,6 +8,7 @@ import { CreateQrDto } from '../qrcodetype/dto/CreateQr.dto';
 import { ConfigService } from '@nestjs/config';
 import { QrcodetypeService } from '../qrcodetype/qrcodetype.service';
 import { PdfResponseDto } from './dto/PdfResponse.dto';
+import { FileUploadService } from '../file-upload/file-upload.service';
 
 @Injectable()
 export class PdfService {
@@ -17,6 +18,7 @@ export class PdfService {
     @InjectRepository(PdfEntity)
     private pdfRepository: Repository<PdfEntity>,
     private qrService: QrcodetypeService,
+    private fileUpload: FileUploadService,
   ) {
     this.configService = new ConfigService();
   }
@@ -27,7 +29,14 @@ export class PdfService {
   ): Promise<PdfResponseDto> {
     console.log(payload, 'payload');
 
-    const pdf = this.pdfRepository.create({ ...payload, user: { id: user } });
+    const file = await this.fileUpload.uploadFile(payload.pdfFile);
+    console.log(file, 'fileLink');
+    const pdf = this.pdfRepository.create({
+      ...payload,
+      pdfFile: file.fileUrl,
+      assetId: file.assetId,
+      user: { id: user },
+    });
     const res = await pdf.save();
 
     const qrPayload: CreateQrDto = {
@@ -39,7 +48,7 @@ export class PdfService {
 
     const qrCode = await this.qrService.createQr(qrPayload);
 
-    delete pdf.pdfFile;
+    // delete pdf.pdfFile;
     // this.pdfRepository.update(pdf.id, { qrCode: qrCode });
     return { pdf: res, qrCode: qrCode };
   }
