@@ -11,8 +11,10 @@ import {
 import { IsEmail, IsOptional } from 'class-validator';
 import { Subscription } from './subscription.entity';
 import { Website } from 'src/modules/qrcodetype/entity/website.entity';
-import { Pdf } from 'src/modules/qrcodetype/entity/pdf.entity';
 import { VCard } from 'src/modules/vcard/entity/vcard.entitiy';
+import { QrCode } from 'src/modules/qrcodetype/entity/qrcode.entity';
+import { PdfEntity } from 'src/modules/pdf/entity/Pdf.entity';
+import { Exclude } from 'class-transformer';
 
 @Entity()
 export class User extends BaseEntity {
@@ -27,9 +29,10 @@ export class User extends BaseEntity {
   email: string;
 
   @Column()
+  @Exclude()
   password: string;
 
-  @Column({default:null})
+  @Column({ default: null })
   avatar: string;
 
   @Column({ default: null })
@@ -45,6 +48,9 @@ export class User extends BaseEntity {
   @ManyToOne(() => Website, (Website) => Website.user)
   Website: Website;
 
-  @ManyToOne(() => Pdf, (Pdf) => Pdf.user)
-  pdf: Pdf;
+  @ManyToOne(() => PdfEntity, (Pdf) => Pdf.user)
+  pdf: PdfEntity;
+
+  @ManyToOne(() => QrCode, (QrCode) => QrCode.user)
+  qrCode: QrCode;
 }

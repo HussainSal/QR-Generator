@@ -17,7 +17,7 @@ export class Website extends BaseEntity {
   @ManyToOne(() => User, (User) => User.Website)
   user: User;
 
-  @OneToOne(() => QrCode, (qrCode) => qrCode.vCards)
+  @OneToOne(() => QrCode, (qrCode) => qrCode.vCard)
   qrCode: QrCode;
 
   @Column()

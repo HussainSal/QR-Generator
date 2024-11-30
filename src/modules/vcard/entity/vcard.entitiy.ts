@@ -1,3 +1,6 @@
+import { Optional } from '@nestjs/common';
+import { ApiProperty } from '@nestjs/swagger';
+import { IsOptional } from 'class-validator';
 import { QrCode } from 'src/modules/qrcodetype/entity/qrcode.entity';
 import { User } from 'src/modules/users/entity/user.entity';
 import {
@@ -7,6 +10,8 @@ import {
   Column,
   ManyToOne,
   OneToOne,
+  JoinColumn,
+  IsNull,
 } from 'typeorm';
 
 @Entity()
@@ -14,14 +19,25 @@ export class VCard extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @ManyToOne(() => User, (user) => user.vcard)
+  @Column()
+  @Optional()
+  createAt: Date;
+
+  @ManyToOne(() => User, (user) => user.vcard, { eager: true })
+  @JoinColumn()
   user: User;
 
-  @OneToOne(() => QrCode, (qrCode) => qrCode.vCards)
+  @OneToOne(() => QrCode, (qrCode) => qrCode.vCard, { cascade: true })
+  @JoinColumn() // Specify the join column
   qrCode: QrCode;
 
-  @Column({ nullable: true })
-  image: string;
+  @IsOptional()
+  @Column({ nullable: true }) // Allow null values
+  image: string; // Store the image file as a Buffer
+
+  @IsOptional()
+  @Column({ nullable: true }) // Allow null values
+  imageId: string; // Store the image file as a Buffer
 
   @Column()
   firstName: string;

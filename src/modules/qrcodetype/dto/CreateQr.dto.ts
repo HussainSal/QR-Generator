@@ -1,34 +1,39 @@
-import { ApiProperty } from "@nestjs/swagger";
-import { IsNotEmpty, IsNumber, IsString } from "class-validator";
+import { ApiProperty } from '@nestjs/swagger';
+import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
 export class CreateQrDto {
+  @IsNotEmpty()
+  @IsString()
+  @ApiProperty()
+  name: string;
 
-    @IsNotEmpty()
-    @IsString()
-    @ApiProperty()
-    name: string;
+  @IsNotEmpty()
+  @IsString()
+  @ApiProperty()
+  link: string;
 
-    @IsNotEmpty()
-    @IsString()
-    @ApiProperty()
-    link: string;
+  @IsNotEmpty()
+  @IsString()
+  userId: string;
 
-    // @IsNumber()
-    // @ApiProperty()
-    // scans: number ;
+  @IsNotEmpty()
+  @IsString()
+  serviceId: string;
 
-    // @IsNumber()
-    // @ApiProperty()
-    // activeDuration: number ;
- 
-    // @IsNotEmpty()
-    // @IsString()
-    // createdAt: string;
+  // @IsNumber()
+  // @ApiProperty()
+  // scans: number ;
 
-    // @IsNotEmpty()
-    // @IsString()
-    // @ApiProperty()
-    // qrcode: string;
+  // @IsNumber()
+  // @ApiProperty()
+  // activeDuration: number ;
 
+  // @IsNotEmpty()
+  // @IsString()
+  // createdAt: string;
 
+  // @IsNotEmpty()
+  // @IsString()
+  // @ApiProperty()
+  // qrcode: string;
 }
