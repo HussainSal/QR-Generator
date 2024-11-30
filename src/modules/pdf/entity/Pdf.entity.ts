@@ -29,6 +29,7 @@ export class PdfEntity extends BaseEntity {
   @OneToOne(() => QrCode, (qrCode) => qrCode.pdf)
   qrCode: QrCode;
 
+  // logo while page is loading...
   @Column({ nullable: true })
   WelcomeScreen: string;
 
