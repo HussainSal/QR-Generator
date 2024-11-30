@@ -2,7 +2,7 @@ import { createClient } from 'contentful-management';
 import { ConfigService } from '@nestjs/config';
 
 const configService = new ConfigService();
-const accessToken = configService.get<string>('CONTENTFUL_ACCESS_TOKEN');
+const accessToken = '';
 
 export const client = createClient({
   accessToken: accessToken,
