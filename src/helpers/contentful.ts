@@ -1,8 +1,11 @@
 import { createClient } from 'contentful-management';
+import { ConfigService } from '@nestjs/config';
+
+const configService = new ConfigService();
+const accessToken = configService.get<string>('CONTENTFUL_ACCESS_TOKEN');
 
 export const client = createClient({
-  // Your Contentful Management API token
-  accessToken: 'CFPAT-sASpxjAHQW-DVHRLgw5Wvms3p2sb8iokPSwGEX6conQ',
+  accessToken: accessToken,
 });
 
 export async function uploadPdf(

@@ -1,0 +1,45 @@
+{
+  "vcard": {
+    "createAt": "2024-11-28T02:16:54.932Z",
+    "firstName": "SERVICE_ID",
+    "lastName": "Hussain",
+    "contact": "9548313059",
+    "email": "farhanhussain@gmail.com",
+    "company": "Tru",
+    "yourJob": "Admin",
+    "address": "QRCreator",
+    "title": "Testing something",
+    "website": "QR.com",
+    "summary": "string",
+    "instaUrl": "string",
+    "facebookUrl": "string",
+    "githubUrl": "string",
+    "telegramUrl": "string",
+    "twitter": "string",
+    "welcomeScreen": "string",
+    "directions": "string",
+    "background": "string",
+    "styling": "string",
+    "user": {
+      "id": "128169ed-9e08-44e7-a9de-3214e479e891"
+    },
+    "image": null,
+    "fax": null,
+    "id": "965e7a60-5567-4cc1-b9ca-a011f7079d42"
+  },
+  "qrCode": {
+    "createdAt": "2024-11-28T02:16:55.032Z",
+    "name": "SERVICE_ID",
+    "link": "http://localhost:3000/vcard/965e7a60-5567-4cc1-b9ca-a011f7079d42",
+    "scans": 0,
+    "activeDuration": 0,
+    "qrCode": "",
+    "user": {
+      "id": "128169ed-9e08-44e7-a9de-3214e479e891"
+    },
+    "frame": null,
+    "logo": null,
+    "color": null,
+    "id": "b5fd30eb-6e8e-4993-9cf8-351d364214a0"
+  }
+}

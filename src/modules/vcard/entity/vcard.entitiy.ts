@@ -32,8 +32,12 @@ export class VCard extends BaseEntity {
   qrCode: QrCode;
 
   @IsOptional()
-  @Column('bytea', { nullable: true }) // Allow null values
-  image: Buffer; // Store the image file as a Buffer
+  @Column({ nullable: true }) // Allow null values
+  image: string; // Store the image file as a Buffer
+
+  @IsOptional()
+  @Column({ nullable: true }) // Allow null values
+  imageId: string; // Store the image file as a Buffer
 
   @Column()
   firstName: string;

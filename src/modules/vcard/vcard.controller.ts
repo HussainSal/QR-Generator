@@ -34,9 +34,8 @@ export class VcardController {
     @Body() createVcardDto: CreateVcardDto,
   ): Promise<{ vcard: VCard; qrCode: QrCode }> {
     console.log(user, 'USER_INFO_CHECK');
-
     const vcard = await this.vcardService.create(
-      { ...createVcardDto, image: image.buffer },
+      { ...createVcardDto, image: image },
       user.id,
     );
     console.log(vcard, 'VCARDDDD');

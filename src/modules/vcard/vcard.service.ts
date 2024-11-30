@@ -8,6 +8,8 @@ import { QrcodetypeService } from '../qrcodetype/qrcodetype.service';
 import { CreateQrDto } from '../qrcodetype/dto/CreateQr.dto';
 import { ConfigService } from '@nestjs/config';
 import { QrCode } from '../qrcodetype/entity/qrcode.entity';
+import { uploadPdf } from 'src/helpers/contentful';
+import { FileUploadService } from '../file-upload/file-upload.service';
 
 @Injectable()
 export class VcardService {
@@ -17,6 +19,7 @@ export class VcardService {
     @InjectRepository(VCard)
     private vcardRepository: Repository<VCard>,
     private qrService: QrcodetypeService, // Inject QrcodetypeService here
+    private fileupload: FileUploadService,
   ) {
     this.configService = new ConfigService();
   }
@@ -26,8 +29,13 @@ export class VcardService {
     user: string,
   ): Promise<{ vcard: VCard; qrCode: QrCode }> {
     // vcard payload
+
+    const image = await this.fileupload.uploadFile(payload.image);
+
     const vardPayload = {
       ...payload,
+      image: image.fileUrl,
+      imageId: image.assetId,
       user: { id: user },
       createAt: new Date().toISOString(),
     };
@@ -48,12 +56,16 @@ export class VcardService {
   }
 
   async update(payload: UpdateVcardDto, user: string): Promise<VCard> {
-    // const user = this.findOne()
+    const image = await this.fileupload.uploadFile(payload.image);
 
-    const vcard = await this.vcardRepository.update(payload.id, {
+    const vardPayload = {
       ...payload,
+      image: image.fileUrl,
       user: { id: user },
-    });
+      createAt: new Date().toISOString(),
+    };
+
+    const vcard = await this.vcardRepository.update(payload.id, vardPayload);
 
     const updatedVCard = await this.vcardRepository.findOne({
       where: { id: payload.id },
