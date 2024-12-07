@@ -10,8 +10,9 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Column } from 'typeorm';
 
 export class CreateVcardDto {
+  @IsOptional()
   @ApiProperty({ required: false })
-  image: Express.Multer.File; // Change Buffer to Express.Multer.File
+  image?: Express.Multer.File; // Change Buffer to Express.Multer.File
 
   @IsString()
   @IsNotEmpty()

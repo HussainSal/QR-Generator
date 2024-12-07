@@ -30,12 +30,13 @@ export class VcardService {
   ): Promise<{ vcard: VCard; qrCode: QrCode }> {
     // vcard payload
 
-    const image = await this.fileupload.uploadFile(payload.image);
+    const image =
+      payload.image && (await this.fileupload.uploadFile(payload.image));
 
-    const vardPayload = {
+    let vardPayload = {
       ...payload,
-      image: image.fileUrl,
-      imageId: image.assetId,
+      image: image ? image.fileUrl : null,
+      imageId: image ? image.assetId : null,
       user: { id: user },
       createAt: new Date().toISOString(),
     };

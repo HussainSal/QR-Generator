@@ -15,8 +15,8 @@ import { jwtConstants } from './dto/payload';
     UsersModule,
     PassportModule.register({ defaultStrategy: 'jwt' }),
     JwtModule.register({
-      secret:jwtConstants.secret,
-      signOptions: { expiresIn: '3600s' },
+      secret: jwtConstants.secret,
+      signOptions: { expiresIn: '30d' }, // Use a string for duration
     }),
     // TypeOrmModule.forFeature([UsersService])
   ],

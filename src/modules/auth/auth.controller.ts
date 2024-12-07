@@ -3,6 +3,7 @@ import {
   Controller,
   Post,
   Req,
+  Res,
   UnauthorizedException,
   UseGuards,
 } from '@nestjs/common';
@@ -13,6 +14,7 @@ import { LoginCredentialDto } from './dto/login-user-dto';
 import { AuthGuard } from '@nestjs/passport';
 import { GetUser } from './get-user-decoratore';
 import { User } from '../users/entity/user.entity';
+import { Response } from 'express';
 
 @Controller('auth')
 @ApiTags('Auth')
@@ -26,9 +28,21 @@ export class AuthController {
   }
 
   @Post('/login')
-  async signIn(@Body() loginCredentialDto: LoginCredentialDto) {
+  async signIn(
+    @Body() loginCredentialDto: LoginCredentialDto,
+    @Res() response: Response,
+  ) {
     const token = await this.authService.login(loginCredentialDto);
-    return token;
+    response.cookie('token', token.accessToken, {
+      maxAge: 1000 * 60 * 60 * 24 * 30,
+      httpOnly: true,
+      secure: true,
+      sameSite: true,
+    });
+    console.log('UPTO_HERE', token.accessToken);
+    response.send({ message: 'Login successful' });
+
+    // return { message: 'Login successful' };
   }
 
   // @Post('/test')

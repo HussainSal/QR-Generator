@@ -30,12 +30,12 @@ export class VcardController {
   @ApiConsumes('multipart/form-data')
   async createVcard(
     @GetUser() user: User,
-    @UploadedFile() image: Express.Multer.File,
     @Body() createVcardDto: CreateVcardDto,
+    @UploadedFile() image?: Express.Multer.File | null,
   ): Promise<{ vcard: VCard; qrCode: QrCode }> {
     console.log(user, 'USER_INFO_CHECK');
     const vcard = await this.vcardService.create(
-      { ...createVcardDto, image: image },
+      { ...createVcardDto, image: image ? image : null },
       user.id,
     );
     console.log(vcard, 'VCARDDDD');
