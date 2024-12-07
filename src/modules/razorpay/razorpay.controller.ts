@@ -1,6 +1,8 @@
-import { Body, Controller, Post, Req } from '@nestjs/common';
+import { Body, Controller, Post, Req, Res } from '@nestjs/common';
 import { RazorpayService } from './razorpay.service';
 import { OrderDto } from './dto/order.dto';
+import { Response } from 'express';
+import { VerificationDto } from './dto/verification.dto';
 
 @Controller('razorpay')
 export class RazorpayController {
@@ -14,9 +16,14 @@ export class RazorpayController {
   }
 
   @Post('verification')
-  async verification(@Body() body: any, @Req() req: any) {
-    console.log(body, 'VERIFICAITON_IN_PROG', req.body);
+  async verification(@Body() body: VerificationDto, @Res() res: Response) {
+    console.log(body, 'VERIFICAITON_IN_PROG');
+    const verification = await this.razorPayService.verifyPayment(body);
 
-    return body;
+    return res.redirect(
+      verification
+        ? 'http://localhost:3000/payment-success'
+        : 'http://localhost:3000/payment-failed',
+    );
   }
 }
