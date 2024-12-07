@@ -10,11 +10,11 @@ import {
 } from 'typeorm';
 import { IsEmail, IsOptional } from 'class-validator';
 import { Subscription } from './subscription.entity';
-import { Website } from 'src/modules/qrcodetype/entity/website.entity';
 import { VCard } from 'src/modules/vcard/entity/vcard.entitiy';
 import { QrCode } from 'src/modules/qrcodetype/entity/qrcode.entity';
 import { PdfEntity } from 'src/modules/pdf/entity/Pdf.entity';
 import { Exclude } from 'class-transformer';
+import { WebsiteEntity } from 'src/modules/website/entitiy/Website.entity';
 
 @Entity()
 export class User extends BaseEntity {
@@ -42,15 +42,15 @@ export class User extends BaseEntity {
   @OneToOne(() => Subscription, (Subscription) => Subscription.user)
   subscription: Subscription;
 
-  @ManyToOne(() => VCard, (VCard) => VCard.user)
+  @OneToMany(() => VCard, (VCard) => VCard.user)
   vcard: VCard;
 
-  @ManyToOne(() => Website, (Website) => Website.user)
-  Website: Website;
+  @OneToMany(() => WebsiteEntity, (Website) => Website.user)
+  website: WebsiteEntity;
 
-  @ManyToOne(() => PdfEntity, (Pdf) => Pdf.user)
+  @OneToMany(() => PdfEntity, (Pdf) => Pdf.user)
   pdf: PdfEntity;
 
-  @ManyToOne(() => QrCode, (QrCode) => QrCode.user)
+  @OneToMany(() => QrCode, (QrCode) => QrCode.user)
   qrCode: QrCode;
 }

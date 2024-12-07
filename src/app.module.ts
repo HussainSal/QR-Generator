@@ -10,6 +10,8 @@ import { QrcodetypeModule } from './modules/qrcodetype/qrcodetype.module';
 import { VcardModule } from './modules/vcard/vcard.module';
 import { PdfModule } from './modules/pdf/pdf.module';
 import { FileUploadModule } from './modules/file-upload/file-upload.module';
+import { WebsiteModule } from './modules/website/website.module';
+import { RazorpayModule } from './modules/razorpay/razorpay.module';
 
 
   
@@ -20,7 +22,9 @@ import { FileUploadModule } from './modules/file-upload/file-upload.module';
     QrcodetypeModule,
     VcardModule,
     PdfModule,
-    FileUploadModule
+    FileUploadModule,
+    WebsiteModule,
+    RazorpayModule
   ],
   controllers: [AppController],
   providers: [AppService],

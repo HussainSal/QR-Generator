@@ -8,11 +8,11 @@ import {
   ManyToOne,
   JoinColumn,
 } from 'typeorm';
-import { Website } from './website.entity';
 import { VCard } from 'src/modules/vcard/entity/vcard.entitiy';
 import { IsOptional } from 'class-validator';
 import { User } from 'src/modules/users/entity/user.entity';
 import { PdfEntity } from 'src/modules/pdf/entity/Pdf.entity';
+import { WebsiteEntity } from 'src/modules/website/entitiy/Website.entity';
 
 export enum QrType {
   VCARD = 'VCARD',
@@ -69,10 +69,10 @@ export class QrCode extends BaseEntity {
   @JoinColumn()
   user: User;
 
-  @IsOptional()
-  @OneToOne(() => Website, (website) => website.qrCode)
-  // @JoinColumn() // Specify the join column
-  website: Website;
+  // @IsOptional()
+  // @OneToOne(() => WebsiteEntity, (website) => website.qrCode)
+  // // @JoinColumn() // Specify the join column
+  // website: WebsiteEntity;
 
   @IsOptional()
   @OneToOne(() => PdfEntity, (pdf) => pdf.qrCode)
