@@ -63,7 +63,7 @@ export class VCard extends BaseEntity {
   @Column({ nullable: true })
   address: string;
 
-  @Column()
+  @Column({ nullable: true })
   title: string;
 
   @Column({ nullable: true })

@@ -3,6 +3,7 @@ import { IsEmail, isEmail, IsOptional, IsString } from 'class-validator';
 
 export class CreatePdfDto {
   @ApiProperty()
+  @IsOptional()
   @IsEmail()
   email: string;
 
