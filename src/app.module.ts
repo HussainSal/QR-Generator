@@ -12,6 +12,7 @@ import { PdfModule } from './modules/pdf/pdf.module';
 import { FileUploadModule } from './modules/file-upload/file-upload.module';
 import { WebsiteModule } from './modules/website/website.module';
 import { RazorpayModule } from './modules/razorpay/razorpay.module';
+import { SocialMediaModule } from './modules/social-media/social-media.module';
 
 
   
@@ -24,7 +25,8 @@ import { RazorpayModule } from './modules/razorpay/razorpay.module';
     PdfModule,
     FileUploadModule,
     WebsiteModule,
-    RazorpayModule
+    RazorpayModule,
+    SocialMediaModule
   ],
   controllers: [AppController],
   providers: [AppService],
