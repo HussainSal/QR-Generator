@@ -40,7 +40,7 @@ export class AuthController {
       sameSite: true,
     });
     console.log('UPTO_HERE', token.accessToken);
-    response.send({ message: 'Login successful' });
+    response.send({ message: 'Login successful', token: token.accessToken });
 
     // return { message: 'Login successful' };
   }
