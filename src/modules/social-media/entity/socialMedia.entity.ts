@@ -16,13 +16,16 @@ class SocialMediaEntity extends BaseEntity {
   user: User;
 
   @Column({ nullable: true })
+  title: string;
+
+  @Column({ nullable: true })
   headLine: string;
 
   @Column({ nullable: true })
   aboutUs: string;
 
   @Column({ nullable: true })
-  sharing: boolean;
+  sharing: string;
 
   @Column({ nullable: true })
   instaUrl: string;
@@ -41,9 +44,6 @@ class SocialMediaEntity extends BaseEntity {
 
   @Column({ nullable: true })
   welcomeScreen: string;
-
-  @Column({ nullable: true })
-  directions: string;
 
   @Column({ nullable: true })
   background: string;
