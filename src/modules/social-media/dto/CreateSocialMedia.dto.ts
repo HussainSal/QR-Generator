@@ -71,9 +71,9 @@ export class CreateSocialMediaDTO {
   @IsOptional()
   twitter: string;
 
-  @IsString()
   @IsOptional()
-  welcomeScreen: string;
+  @ApiProperty({ required: false })
+  welcomeScreen: Express.Multer.File;
 
   @IsString()
   @IsOptional()

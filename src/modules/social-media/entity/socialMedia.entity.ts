@@ -46,6 +46,15 @@ class SocialMediaEntity extends BaseEntity {
   welcomeScreen: string;
 
   @Column({ nullable: true })
+  welcomeScreenId: string;
+
+  @Column({ nullable: true })
+  image: string;
+
+  @Column({ nullable: true })
+  imageId: string;
+
+  @Column({ nullable: true })
   background: string;
 
   @Column({ nullable: true })
