@@ -5,7 +5,6 @@ import {
   IsOptional,
   IsString,
 } from 'class-validator';
-import { BaseVcardDto } from './baseVcardDto';
 import { ApiProperty } from '@nestjs/swagger';
 import { Column } from 'typeorm';
 
@@ -13,6 +12,18 @@ export class CreateVcardDto {
   @IsOptional()
   @ApiProperty({ required: false })
   image?: Express.Multer.File; // Change Buffer to Express.Multer.File
+
+  @IsOptional()
+  @ApiProperty({ required: false })
+  imageId?: string;
+
+  @IsOptional()
+  @ApiProperty({ required: false })
+  welcomeScreen?: Express.Multer.File; // Change Buffer to Express.Multer.File
+
+  @IsOptional()
+  @ApiProperty({ required: false })
+  welcomeScreenId?: string;
 
   @IsString()
   @IsNotEmpty()
@@ -73,10 +84,6 @@ export class CreateVcardDto {
   @IsString()
   @IsOptional()
   twitter: string;
-
-  @IsString()
-  @IsOptional()
-  welcomeScreen: string;
 
   @IsString()
   @IsOptional()
