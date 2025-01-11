@@ -28,15 +28,20 @@ export class VcardService {
     payload: CreateVcardDto,
     user: string,
   ): Promise<{ vcard: VCard; qrCode: QrCode }> {
-    // vcard payload
+    const image =
+      payload.image && (await this.fileupload.uploadFile(payload.image));
 
-    const image = await this.fileupload.uploadFile(payload.image);
+    const welcomeScreen =
+      payload.welcomeScreen &&
+      (await this.fileupload.uploadFile(payload.welcomeScreen));
 
-    const vardPayload = {
+    let vardPayload = {
       ...payload,
-      image: image.fileUrl,
-      imageId: image.assetId,
       user: { id: user },
+      image: image ? image.fileUrl : null,
+      imageId: image ? image.assetId : null,
+      welcomeScreen: welcomeScreen ? welcomeScreen.fileUrl : null,
+      welcomeScreenId: welcomeScreen ? welcomeScreen.assetId : null,
       createAt: new Date().toISOString(),
     };
 
@@ -55,15 +60,30 @@ export class VcardService {
     return { vcard: res, qrCode: qrCode };
   }
 
+  /* Updating Vcard */
   async update(payload: UpdateVcardDto, user: string): Promise<VCard> {
-    const image = await this.fileupload.uploadFile(payload.image);
+    const image =
+      payload.image && (await this.fileupload.uploadFile(payload.image));
+
+    const welcomeScreen =
+      payload.welcomeScreen &&
+      (await this.fileupload.uploadFile(payload.welcomeScreen));
 
     const vardPayload = {
       ...payload,
-      image: image.fileUrl,
       user: { id: user },
       createAt: new Date().toISOString(),
-    };
+    } as any; // Type assertion to avoid TypeScript errors
+
+    if (image?.fileUrl) {
+      vardPayload.image = image.fileUrl;
+      vardPayload.imageId = image.assetId;
+    }
+
+    if (welcomeScreen?.fileUrl) {
+      vardPayload.welcomeScreen = welcomeScreen.fileUrl;
+      vardPayload.welcomeScreenId = welcomeScreen.assetId;
+    }
 
     const vcard = await this.vcardRepository.update(payload.id, vardPayload);
 

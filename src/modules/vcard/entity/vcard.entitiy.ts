@@ -63,7 +63,7 @@ export class VCard extends BaseEntity {
   @Column({ nullable: true })
   address: string;
 
-  @Column()
+  @Column({ nullable: true })
   title: string;
 
   @Column({ nullable: true })
@@ -87,8 +87,13 @@ export class VCard extends BaseEntity {
   @Column({ nullable: true })
   twitter: string;
 
-  @Column({ nullable: true })
-  welcomeScreen: string;
+  @IsOptional()
+  @Column({ nullable: true }) // Allow null values
+  welcomeScreen: string; // Store the image file as a Buffer
+
+  @IsOptional()
+  @Column({ nullable: true }) // Allow null values
+  welcomeScreenId: string; // Store the image file as a Buffer
 
   @Column({ nullable: true })
   directions: string;

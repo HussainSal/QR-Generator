@@ -4,12 +4,18 @@ import { ExtractJwt, Strategy } from 'passport-jwt';
 import { jwtConstants, Payload } from '../dto/payload';
 // import { AuthService } from '../auth.service';
 import { UsersService } from 'src/modules/users/users.service';
+import { Request } from 'express';
 
 @Injectable()
 export class JWTStrategy extends PassportStrategy(Strategy) {
-  constructor(private userService:UsersService) { // Inject UsersService correctly here
+  constructor(private userService: UsersService) {
+    // Inject UsersService correctly here
     super({
-      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+      jwtFromRequest: ExtractJwt.fromExtractors([
+        (request) => {
+          return request?.cookies?.token;
+        },
+      ]),
       secretOrKey: jwtConstants.secret,
     });
   }

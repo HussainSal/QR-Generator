@@ -1,37 +1,27 @@
+import { ApiProperty } from '@nestjs/swagger';
 import {
-  IsEmail,
-  IsNotEmpty,
+  IsString,
   IsNumber,
   IsOptional,
-  IsString,
+  IsNotEmpty,
+  IsEmail,
+  IsBoolean,
+  isString,
 } from 'class-validator';
-import { ApiProperty } from '@nestjs/swagger';
-import { Column } from 'typeorm';
+// import { } from "class-transformer"
 
-export class CreateVcardDto {
+export class CreateSocialMediaDTO {
   @IsOptional()
   @ApiProperty({ required: false })
   image?: Express.Multer.File; // Change Buffer to Express.Multer.File
 
-  @IsOptional()
-  @ApiProperty({ required: false })
-  imageId?: string;
-
-  @IsOptional()
-  @ApiProperty({ required: false })
-  welcomeScreen?: Express.Multer.File; // Change Buffer to Express.Multer.File
-
-  @IsOptional()
-  @ApiProperty({ required: false })
-  welcomeScreenId?: string;
-
   @IsString()
   @IsNotEmpty()
-  firstName: string;
+  headLine: string;
 
   @IsString()
   @IsOptional()
-  lastName: string;
+  aboutUs: string;
 
   @IsEmail()
   @IsNotEmpty()
@@ -39,7 +29,7 @@ export class CreateVcardDto {
 
   @IsString()
   @IsNotEmpty()
-  contact: string;
+  sharing: string;
 
   @IsString()
   @IsOptional()
@@ -48,10 +38,6 @@ export class CreateVcardDto {
   @IsString()
   @IsOptional()
   company: string;
-
-  @IsString()
-  @IsOptional()
-  yourJob: string;
 
   @IsString()
   @IsOptional()
@@ -85,9 +71,9 @@ export class CreateVcardDto {
   @IsOptional()
   twitter: string;
 
-  @IsString()
   @IsOptional()
-  directions: string;
+  @ApiProperty({ required: false })
+  welcomeScreen: Express.Multer.File;
 
   @IsString()
   @IsOptional()
@@ -96,10 +82,4 @@ export class CreateVcardDto {
   @IsString()
   @IsOptional()
   styling: string;
-}
-
-export class UpdateVcardDto extends CreateVcardDto {
-  @IsString()
-  @IsNotEmpty()
-  id: string;
 }

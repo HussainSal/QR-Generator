@@ -15,6 +15,7 @@ import { QrCode } from 'src/modules/qrcodetype/entity/qrcode.entity';
 import { PdfEntity } from 'src/modules/pdf/entity/Pdf.entity';
 import { Exclude } from 'class-transformer';
 import { WebsiteEntity } from 'src/modules/website/entitiy/Website.entity';
+import SocialMediaEntity from 'src/modules/social-media/entity/socialMedia.entity';
 
 @Entity()
 export class User extends BaseEntity {
@@ -50,6 +51,9 @@ export class User extends BaseEntity {
 
   @OneToMany(() => PdfEntity, (Pdf) => Pdf.user)
   pdf: PdfEntity;
+
+  @OneToMany(() => PdfEntity, (Pdf) => Pdf.user)
+  socialMedia: SocialMediaEntity;
 
   @OneToMany(() => QrCode, (QrCode) => QrCode.user)
   qrCode: QrCode;

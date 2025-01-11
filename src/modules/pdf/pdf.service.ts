@@ -48,8 +48,6 @@ export class PdfService {
 
     const qrCode = await this.qrService.createQr(qrPayload);
 
-    // delete pdf.pdfFile;
-    // this.pdfRepository.update(pdf.id, { qrCode: qrCode });
     return { pdf: res, qrCode: qrCode };
   }
 }
