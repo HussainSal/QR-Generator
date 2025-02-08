@@ -30,11 +30,17 @@ export class PdfService {
     console.log(payload, 'payload');
 
     const file = await this.fileUpload.uploadFile(payload.pdfFile);
+
+    const welcomeScreen =
+      payload.welcomeScreen &&
+      (await this.fileUpload.uploadFile(payload.welcomeScreen));
+
     console.log(file, 'fileLink');
     const pdf = this.pdfRepository.create({
       ...payload,
       pdfFile: file.fileUrl,
       assetId: file.assetId,
+      welcomeScreen: welcomeScreen?.fileUrl,
       user: { id: user },
     });
     const res = await pdf.save();

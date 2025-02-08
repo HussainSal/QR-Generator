@@ -31,7 +31,7 @@ export class PdfEntity extends BaseEntity {
 
   // logo while page is loading...
   @Column({ nullable: true })
-  WelcomeScreen: string;
+  welcomeScreen: string;
 
   @Column()
   company: string;

@@ -4,6 +4,7 @@ import {
   Controller,
   Post,
   UploadedFile,
+  UploadedFiles,
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
@@ -12,7 +13,10 @@ import { CreatePdfDto } from './dto/CreatePdfDto.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { GetUser } from '../auth/get-user-decoratore';
 import { User } from '../users/entity/user.entity';
-import { FileInterceptor } from '@nestjs/platform-express';
+import {
+  FileFieldsInterceptor,
+  FileInterceptor,
+} from '@nestjs/platform-express';
 import { ApiConsumes, ApiTags } from '@nestjs/swagger';
 import { PdfResponseDto } from './dto/PdfResponse.dto';
 
@@ -23,19 +27,33 @@ export class PdfController {
   constructor(private pdfService: PdfService) {}
 
   @Post()
-  @UseInterceptors(FileInterceptor('file'), ClassSerializerInterceptor)
+  // @UseInterceptors(FileInterceptor('file'), ClassSerializerInterceptor)
+  @UseInterceptors(
+    FileFieldsInterceptor([
+      { name: 'bgImage', maxCount: 1 },
+      { name: 'welcomeScreen', maxCount: 1 },
+    ]),
+  )
   @ApiConsumes('multipart/form-data')
   async create(
     @GetUser() user: User,
-    @UploadedFile() file: Express.Multer.File,
+    // @UploadedFile() file: Express.Multer.File,
+    @UploadedFiles()
+    files: {
+      pdfFile?: Express.Multer.File;
+      welcomeScreen?: Express.Multer.File;
+    },
     @Body() payload: CreatePdfDto,
   ): Promise<PdfResponseDto> {
-    console.log(payload, 'payload');
-    console.log(file, 'FILE_HERE');
+    console.log(files, 'FILE_HERE');
 
     // Pass the buffer and other payload data to the service method
     const result: PdfResponseDto = await this.pdfService.createPdf(
-      { ...payload, pdfFile: file },
+      {
+        ...payload,
+        pdfFile: files?.pdfFile[0],
+        welcomeScreen: files?.welcomeScreen[0],
+      },
       user.id,
     );
 

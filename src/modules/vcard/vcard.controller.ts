@@ -50,8 +50,8 @@ export class VcardController {
     const vcard = await this.vcardService.create(
       {
         ...createVcardDto,
-        image: files?.image[0],
-        welcomeScreen: files?.welcomeScreen[0],
+        image: files?.image?.[0],
+        welcomeScreen: files?.welcomeScreen?.[0],
       },
       user.id,
     );

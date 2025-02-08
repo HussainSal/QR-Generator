@@ -39,7 +39,7 @@ export class CreatePdfDto {
 
   @IsOptional()
   @ApiProperty({ required: false })
-  welcomeScreen?: string;
+  welcomeScreen?: Express.Multer.File;
 
   @IsOptional()
   @ApiProperty({ required: false })

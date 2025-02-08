@@ -47,7 +47,7 @@ export class PdfDto {
     type: String,
   })
   @IsOptional()
-  WelcomeScreen: string | null;
+  welcomeScreen: string | null;
 
   @ApiProperty({
     description: 'Color scheme (optional)',
